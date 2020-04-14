@@ -49,3 +49,4 @@ v1.1.0 - Sideways phasing:
 	  Whether or not this change will stay is to be determined
 v1.1.1 - Should be possible to get working on linux
 	- The keyboard module breaks things on my machine, but it might work on yours
+	- Also removed the console resizing thing because gross
