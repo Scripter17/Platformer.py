@@ -29,12 +29,14 @@ Making maps:
 	Win   (O): When touched, the player wins
 	Spawn (@): Defines where the player spawns from
 
-TODO/Known Bugs:
+TODO:
 	- Map select screen
 	- Better code documentation
 	- Compile game into an exe
 	- Colors?
-	- Check if it works on Linux (Or at least Ubuntu)
+	- (Linux) The flashing cursor doesn't get stopped by ANSI escape codes as far as I can tell
+Known Bugs:
+	- (Linux) The keyboard module doesn't work, and I do not have the patience or knowledge needed to fix it
 
 Changelog:
 v1.0.0 - Initial:
@@ -45,3 +47,5 @@ v1.1.0 - Sideways phasing:
 	  The default map.txt reflects this on line 8
 	- The game window now automatically resizes into the map's dimensions
 	  Whether or not this change will stay is to be determined
+v1.1.1 - Should be possible to get working on linux
+	- The keyboard module breaks things on my machine, but it might work on yours
