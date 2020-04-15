@@ -30,13 +30,11 @@ Making maps:
 	Spawn (@): Defines where the player spawns from
 
 TODO:
-	- Map select screen
 	- Better code documentation
 	- Compile game into an exe
-	- Colors?
-	- (Linux) The flashing cursor doesn't get stopped by ANSI escape codes as far as I can tell
+	- Cut down the number of modules I'm using
+	- Add a border around the game
 Known Bugs:
-	- (Linux) The keyboard module doesn't work, and I do not have the patience or knowledge needed to fix it
 
 Changelog:
 v1.0.0 - Initial:
@@ -48,5 +46,9 @@ v1.1.0 - Sideways phasing:
 	- The game window now automatically resizes into the map's dimensions
 	  Whether or not this change will stay is to be determined
 v1.1.1 - Should be possible to get working on linux
-	- The keyboard module breaks things on my machine, but it might work on yours
+	- The keyboard module breaks things on the Linux subsystem for my Windows 10 machine, but it might work on yours
 	- Also removed the console resizing thing because gross
+v1.3.0 - Some colorful colors and colorful language to Linux
+	- Officially not supporting Linux for the time being due to just generally being a pain
+	- The player, death zones, and win zones are color coded to be orange, red, and green
+	- Created a map selection screen

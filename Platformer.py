@@ -2,7 +2,7 @@
 # James C. Wise - 2020-04-14 
 #  See LICENSE.md for legal
 
-import colorama, os, keyboard, time, ctypes
+import colorama, os, subprocess as sp, keyboard, time, ctypes, msvcrt
 colorama.init()
 
 # Some ctypes bullshit to make the terminal cursor not appear
@@ -20,9 +20,42 @@ except:
 # Good lord that was gross
 
 px, py=0, 0
+prefixes={
+	" ":"",
+	"#":"",
+	"X":"\033[31m",
+	"O":"\033[32m",
+	"@":"\033[33m"
+}
+suffix="\033[39m"
 
 # Get map data
-mapText=open("map.txt", "r").read()
+maps=[x for x in os.listdir() if x.endswith(".map") and os.path.isfile(x)]
+mapIndex=0
+if len(maps)==0:
+	print("No maps detected!")
+	print("Press any key to exit")
+	msvcrt.getch()
+	exit()
+else:
+	while True:
+		"""key=msvcrt.getch()
+		if key==b"\r":
+			break
+		if key==b"\xe0":
+			key=msvcrt.getch()
+		if key==b"H" : mapIndex=(mapIndex+1)%len(maps)
+		if key==b"P"   : mapIndex=(mapIndex-1+len(maps))%len(maps)"""
+		print(">>> "+maps[mapIndex])
+		if msvcrt.getch()==b"\xe0": msvcrt.getch()
+		if keyboard.is_pressed("escape"): exit()
+		if keyboard.is_pressed("enter"): break
+		if keyboard.is_pressed("up")   : mapIndex=(mapIndex+1)%len(maps)
+		if keyboard.is_pressed("down") : mapIndex=(mapIndex-1+len(maps))%len(maps)
+		print("\033[1A\033[2K",end="")
+sp.run("cls", shell=True)
+sp.run(["title", maps[mapIndex]], shell=True)
+mapText=open(maps[mapIndex], "r").read()
 # Not too sure why I'm doing it like `[["Block"]]` instead of `["Blocks"]` but it doesn't matter too much to me
 mapData=[]
 for yi, y in enumerate(mapText.splitlines()):
@@ -34,7 +67,15 @@ for yi, y in enumerate(mapText.splitlines()):
 		else:
 			mapLine.append(x)
 	mapData.append(mapLine)
-width=max(*[len(x) for x in mapData])
+empty=False
+try:
+	width=max(*[len(x) for x in mapData])
+except:
+	width=0
+if width==0:
+	print("The map selected is empty; Try another map")
+	msvcrt.getch()
+	exit()
 # Pad lines that don't extend to the bounding box
 for yi,y in enumerate(mapData):
 	mapData[yi]+=[" "]*(width-len(y))
@@ -58,15 +99,17 @@ while True:
 	if buttons!="": # If there's no player input, don't reprint the map
 		for yi, y in enumerate(mapData):
 			for xi, x in enumerate(mapData[yi]):
-				print("\033["+str(yi+1)+";"+str(xi+1)+"H"+x)
+				print("\033["+str(yi+1)+";"+str(xi+1)+"H"+(prefixes[x] if x in prefixes.keys() else "")+x+suffix)
 	# Calculate death/win conditions 
 	if py==len(mapData)-1 or mapData[py][px]=="X":
 		print("\033[2J\033[1;1HDead")
-		input("Press Enter to continue")
+		print("Press any key to continue")
+		msvcrt.getch()
 		exit()
 	elif mapData[py][px]=="O":
 		print("\033[2J\033[1;1HWin")
-		input("Press Enter to continue")
+		print("Press any key to continue")
+		msvcrt.getch()
 		exit()
 	# Erase player
 	# If there's no player movement but you're falling, this prevents a trail from happening
@@ -77,8 +120,9 @@ while True:
 	if "L" in buttons and px-hphase>=0 and mapData[py][px-hphase]!="#"                 : px-=hphase
 	if "U" in buttons and py-3>=0 and mapData[py+1][px]=="#" and mapData[py-3][px]!="#": py-=3
 	if "S" in buttons and py-5>=0 and mapData[py+1][px]=="#" and mapData[py-5][px]!="#": py-=5
+	if mapData[py+1][px]=="#":fallTimer=time.time()
 	if not ("D" in buttons) and mapData[py+1][px]!="#" and time.time()-fallTimer>0.5   : py+=1; fallTimer=time.time()
-	print("\033["+str(py+1)+";"+str(px+1)+"H"+"@") # Print player
+	print("\033["+str(py+1)+";"+str(px+1)+"H"+prefixes["@"]+"@"+suffix) # Print player
 	buttons=""
 	for i in range(12):
 		# Checks for buttons every 60th of a second but only does physics every 5th of a second
