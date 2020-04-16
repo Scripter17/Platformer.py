@@ -35,6 +35,7 @@ TODO:
 	- Cut down the number of modules I'm using
 	- Add a border around the game
 Known Bugs:
+	- At the map select, the first key press isn't registered
 
 Changelog:
 v1.0.0 - Initial:
