@@ -1,20 +1,18 @@
-   Platformer.py v1.0.0
-James C. Wise - 2020-04-14 
+   Platformer.py v1.4.0
+James C. Wise - 2020-04-17
  See LICENSE.md for legal
 
 Requirements:
 	- Python 3
-	- Windows (probably)
+	- Windows
 	- Tolerance for unpolished games
 
-Controls:
-	Right : Move right
-	Left  : Move left
-	Down  : Stop falling
-	Up    : Phase up 3 blocks
-	Space : Phase up 5 blocks
-	CTRL+Right : Phase 2 blocks right
-	CTRL+Left  : Phase 2 blocks left
+Controls (2 player mode is in beta and probably very buggy):
+	Player | 3 up | Move right | Stop Falling | Move left | HPhase   | 5 up     
+	-------+------+------------+--------------+-----------+----------+----------
+	1 of 1 | Up   | Right      | Down         | left      | CTRL     | Space    
+	1 of 2 | Up   | Right      | Down         | left      | ALT/CTRL | Backslash
+	2 of 2 | R    | G          | F            | D         | A        | S        
 
 Phasing:
 	Unlike in most platformers which have jumps that are stopped by ceilings, this game has phasing
@@ -30,12 +28,11 @@ Making maps:
 	Spawn (@): Defines where the player spawns from
 
 TODO:
-	- Better code documentation
+	- Better in-code documentation
 	- Compile game into an exe
 	- Cut down the number of modules I'm using
-	- Add a border around the game
+	- CLEAN THE F@!#ING CODE
 Known Bugs:
-	- At the map select, the first key press isn't registered
 
 Changelog:
 v1.0.0 - Initial:
@@ -53,3 +50,6 @@ v1.3.0 - Some colorful colors and colorful language to Linux
 	- Officially not supporting Linux for the time being due to just generally being a pain
 	- The player, death zones, and win zones are color coded to be orange, red, and green
 	- Created a map selection screen
+v1.4.0 - Platforming with friends!
+	- Added a beta 2 player mode. Two players cannot occupy the same block,
+	  so it can create an interesting 2 player dynamic where players use eachother as platforms
